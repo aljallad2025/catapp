@@ -1,0 +1,34 @@
+workflows:
+  android-apk:
+    name: The Cat House - Android APK
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      vars:
+        # أضف هذين المتغيرين من إعدادات Codemagic (Environment variables)
+        # بدلاً من كتابتهما هنا مباشرة حفاظاً على الأمان
+        SUPABASE_URL: $SUPABASE_URL
+        SUPABASE_ANON_KEY: $SUPABASE_ANON_KEY
+    scripts:
+      - name: إنشاء ملف .env من متغيرات البيئة
+        script: |
+          echo "SUPABASE_URL=$SUPABASE_URL" > .env
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
+      - name: تثبيت الحزم
+        script: |
+          flutter pub get
+      - name: توليد أيقونة التطبيق
+        script: |
+          flutter pub run flutter_launcher_icons
+      - name: بناء APK
+        script: |
+          flutter build apk --release --android-skip-build-dependency-validation
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true

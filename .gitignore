@@ -1,0 +1,17 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.env
+*.iml
+*.ipr
+*.iws
+.idea/
+android/local.properties
+android/.gradle/
+android/key.properties
+ios/Flutter/flutter_export_environment.sh
+ios/Pods/
+ios/.symlinks/
+.DS_Store
